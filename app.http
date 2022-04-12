@@ -25,4 +25,9 @@ Content-Type: application/json
 ###
 
 DELETE http://localhost:3001/movies/10/
+###
 
+GET http://localhost:3001/directors
+###
+
+GET http://localhost:3001/directors/19/movies/

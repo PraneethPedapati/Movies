@@ -84,3 +84,24 @@ app.delete("/movies/:movieId/", async (request, response) => {
   await db.run(deleteMovieQuery);
   response.send("Movie Removed");
 });
+
+app.get("/directors/", async (request, response) => {
+  let getDirectorQuery = `
+        SELECT director_id AS directorId, director_name AS directorName
+        FROM director
+    `;
+  let directorList = await db.all(getDirectorQuery);
+  response.send(directorList);
+});
+
+app.get("/directors/:directorId/movies/", async (request, response) => {
+  let { directorId } = request.params;
+  let getDirectorMovieQuery = `
+        SELECT movie.movie_name AS movieName
+        FROM movie
+        NATURAL JOIN director
+        WHERE director_id = ${directorId}
+    `;
+  let directorMovieList = await db.all(getDirectorMovieQuery);
+  response.send(directorMovieList);
+});
